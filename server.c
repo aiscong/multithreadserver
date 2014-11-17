@@ -51,9 +51,10 @@ void *child(){
     printf("child get %d\n", temp);
    
     pthread_cond_signal(&empty);
-    pthread_mutex_unlock(&m);
-    requestHandle(temp);
+  requestHandle(temp);
     Close(temp);
+    pthread_mutex_unlock(&m);
+  
   }
 }
 
@@ -98,10 +99,10 @@ int main(int argc, char *argv[])
     while(count == numb){
       pthread_cond_wait(&empty, &m);
     }
-    printf("before\n");
-    printf("we try to put %d\n", connfd);
+    // printf("before\n");
+    // printf("we try to put %d\n", connfd);
     put(connfd);
-    printf("after\n");
+    // printf("after\n");
     pthread_cond_signal(&fill);
     pthread_mutex_unlock(&m);
     
